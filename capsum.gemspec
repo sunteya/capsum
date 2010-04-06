@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{capsum}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sunteya"]
@@ -15,14 +15,16 @@ Gem::Specification.new do |s|
     "README"
   ]
   s.files = [
-    "README",
+    ".gitignore",
+     "README",
      "Rakefile",
      "VERSION",
      "capsum.gemspec",
      "depends.rb",
      "lib/capsum.rb",
      "lib/capsum/delayed_job.rb",
-     "lib/capsum/passenger.rb"
+     "lib/capsum/passenger.rb",
+     "lib/capsum/typical.rb"
   ]
   s.homepage = %q{http://github.com/sunteya/capsum}
   s.rdoc_options = ["--charset=UTF-8"]
