@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
     "README",
      "Rakefile",
      "VERSION",
+     "capsum.gemspec",
      "depends.rb",
      "lib/capsum.rb",
      "lib/capsum/delayed_job.rb",
