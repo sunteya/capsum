@@ -15,7 +15,9 @@ Capistrano::Configuration.instance(true).load do
 
     desc "Restart delayed_job process" 
     task :restart, :roles => :app do
-      run "if [ -e #{current_path}/script/delayed_job ]; then cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job restart; fi" 
+      delayed_job.stop
+      sleep(4)
+      delayed_job.start
     end
   end
 
