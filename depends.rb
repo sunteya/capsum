@@ -6,10 +6,10 @@ require "gem_loader"
 GemLoader.setup do
 
   scope :runtime do
-    gem "capistrano", ">= 2.5.14"
+    gem "capistrano", ">= 2.5.18"
     gem "capistrano_colors", ">= 0.5.2", :require => nil
     gem "capistrano-ext", ">= 1.2.1", :require => nil
-    gem "capistrano-helpers", ">= 0.3.2", :require => nil
+    gem "capistrano-helpers", ">= 0.4.3", :require => nil
     # gem "cap-recipes", ">= 0.3.36", :require => nil
   end
 
