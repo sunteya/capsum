@@ -5,6 +5,7 @@ require "capistrano-helpers/git"
 
 require File.expand_path("../passenger.rb", __FILE__)
 require File.expand_path("../delayed_job.rb", __FILE__)
+require File.expand_path("../whenever.rb", __FILE__)
 
 Capistrano::Configuration.instance(true).load do
   set :rails_env, "production"
