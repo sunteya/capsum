@@ -12,7 +12,7 @@ Capistrano::Configuration.instance(true).load do
             variables = whenever_settings.map{ |key, value| "#{key}=#{value}" }.join("&")
           end
 
-          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{application} --set %s; fi"
+          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{application} --set \"environment=#{rails_env}&%s\"; fi"
           run (command % variables), :hosts => server.host
         end
       end
