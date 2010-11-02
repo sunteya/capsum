@@ -1,4 +1,6 @@
-require File.expand_path("../../typical.rb", __FILE__)
+require File.expand_path("../../capsum.rb", __FILE__)
+
+require File.expand_path("../typical.rb", __FILE__)
 require "bundler/capistrano"
 
 set :bundle_flags, "--quiet"
