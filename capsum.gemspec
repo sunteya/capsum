@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{capsum}
-  s.version = "0.1.3"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sunteya"]
-  s.date = %q{2010-05-27}
+  s.date = %q{2010-11-02}
   s.email = %q{Sunteya@gmail.com}
   s.extra_rdoc_files = [
     "README"
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/capsum/delayed_job.rb",
      "lib/capsum/passenger.rb",
      "lib/capsum/typical.rb",
+     "lib/capsum/typical3.rb",
      "lib/capsum/whenever.rb"
   ]
   s.homepage = %q{http://github.com/sunteya/capsum}
@@ -39,23 +40,23 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<gem_loader>, [">= 0.2.0"])
-      s.add_runtime_dependency(%q<capistrano>, [">= 2.5.18"])
-      s.add_runtime_dependency(%q<capistrano_colors>, [">= 0.5.2"])
-      s.add_runtime_dependency(%q<capistrano-ext>, [">= 1.2.1"])
-      s.add_runtime_dependency(%q<capistrano-helpers>, [">= 0.4.3"])
+      s.add_runtime_dependency(%q<capistrano>, ["~> 2.5.19"])
+      s.add_runtime_dependency(%q<capistrano_colors>, ["~> 0.5.2"])
+      s.add_runtime_dependency(%q<capistrano-ext>, ["~> 1.2.1"])
+      s.add_runtime_dependency(%q<capistrano-helpers>, ["~> 0.5.7"])
     else
       s.add_dependency(%q<gem_loader>, [">= 0.2.0"])
-      s.add_dependency(%q<capistrano>, [">= 2.5.18"])
-      s.add_dependency(%q<capistrano_colors>, [">= 0.5.2"])
-      s.add_dependency(%q<capistrano-ext>, [">= 1.2.1"])
-      s.add_dependency(%q<capistrano-helpers>, [">= 0.4.3"])
+      s.add_dependency(%q<capistrano>, ["~> 2.5.19"])
+      s.add_dependency(%q<capistrano_colors>, ["~> 0.5.2"])
+      s.add_dependency(%q<capistrano-ext>, ["~> 1.2.1"])
+      s.add_dependency(%q<capistrano-helpers>, ["~> 0.5.7"])
     end
   else
     s.add_dependency(%q<gem_loader>, [">= 0.2.0"])
-    s.add_dependency(%q<capistrano>, [">= 2.5.18"])
-    s.add_dependency(%q<capistrano_colors>, [">= 0.5.2"])
-    s.add_dependency(%q<capistrano-ext>, [">= 1.2.1"])
-    s.add_dependency(%q<capistrano-helpers>, [">= 0.4.3"])
+    s.add_dependency(%q<capistrano>, ["~> 2.5.19"])
+    s.add_dependency(%q<capistrano_colors>, ["~> 0.5.2"])
+    s.add_dependency(%q<capistrano-ext>, ["~> 1.2.1"])
+    s.add_dependency(%q<capistrano-helpers>, ["~> 0.5.7"])
   end
 end
 
