@@ -9,8 +9,9 @@ GemLoader.setup do
     gem "capistrano", "~> 2.5.19"
     gem "capistrano_colors", "~> 0.5.2", :require => nil
     gem "capistrano-ext", "~> 1.2.1", :require => nil
-    gem "capistrano-helpers", "~> 0.4.4", :require => nil
+    gem "capistrano-helpers", "~> 0.5.7", :require => nil
     # gem "cap-recipes", "~> 0.3.36", :require => nil
+    # http://github.com/rubaidh/rubaidhstrano
   end
 
   scope :optional do
