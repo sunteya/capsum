@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{capsum}
-  s.version = "0.2.2"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Sunteya"]
-  s.date = %q{2010-11-02}
+  s.date = %q{2010-11-05}
   s.email = %q{Sunteya@gmail.com}
   s.extra_rdoc_files = [
     "README"
@@ -22,7 +22,8 @@ Gem::Specification.new do |s|
      "capsum.gemspec",
      "depends.rb",
      "lib/capsum.rb",
-     "lib/capsum/delayed_job.rb",
+     "lib/capsum/bundler.rb",
+     "lib/capsum/daemons.rb",
      "lib/capsum/passenger.rb",
      "lib/capsum/typical.rb",
      "lib/capsum/typical3.rb",
