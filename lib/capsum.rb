@@ -1,2 +1,5 @@
-require File.expand_path("../../depends.rb", __FILE__)
-GemLoader.require(:runtime)
+require "capistrano"
+
+module Capsum
+  VERSION = open(File.expand_path("../../VERSION", __FILE__)).read.chomp
+end
