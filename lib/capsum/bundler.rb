@@ -3,7 +3,7 @@ require "bundler/deployment"
 
 Capistrano::Configuration.instance(true).load do
   
-  set :bundle_flags, "--quiet #{fetch(:bundle, '')}"
+  set :bundle_flags, "--quiet #{fetch(:bundle_opts, '')}"
   set :bundle_dir, ""
   set(:current_release) { fetch(:release_path) }
   
