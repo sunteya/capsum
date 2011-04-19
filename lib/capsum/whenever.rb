@@ -4,6 +4,7 @@ Capistrano::Configuration.instance(true).load do
   namespace :whenever do
     desc 'Update the crontab'
     task :update do
+      identifier = fetch(:whenever_identifier, deploy_to)
       find_servers(:roles => :app).each do |server|
         whenever_settings = server.options[:whenever]
         if whenever_settings
@@ -12,7 +13,7 @@ Capistrano::Configuration.instance(true).load do
             variables = whenever_settings.map{ |key, value| "#{key}=#{value}" }.join("&")
           end
 
-          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{application} --set \"environment=#{rails_env}&%s\"; fi"
+          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{identifier} --set \"environment=#{rails_env}&%s\"; fi"
           run (command % variables), :hosts => server.host
         end
       end
@@ -20,7 +21,8 @@ Capistrano::Configuration.instance(true).load do
     
     desc 'Cleanup the crontab'
     task :cleanup, :roles => :app do
-      run "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{application} --load-file /dev/null; fi"
+      identifier = fetch(:whenever_identifier, deploy_to)
+      run "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{identifier} --load-file /dev/null; fi"
     end
   end
   
