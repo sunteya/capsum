@@ -14,4 +14,7 @@ Capistrano::Configuration.instance(true).load do
   # default for :deploy_via, :copy
   set :copy_strategy, :export
   set :copy_compression, :bz2
+  
+  default_environment["http_proxy"] = fetch("http_proxy") if exists?("http_proxy")
+  
 end
