@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   
   
   # Dependency Gems
-  s.add_dependency "capistrano", "~> 2.5.19"
-  s.add_dependency "capistrano_colors", "~> 0.5.2"
+  s.add_dependency "capistrano", "~> 2.8.0"
+  s.add_dependency "capistrano_colors", "~> 0.5.4"
   s.add_dependency "capistrano-ext", "~> 1.2.1"
-  s.add_dependency "capistrano-helpers", "~> 0.5.7"
+  s.add_dependency "capistrano-helpers", "~> 0.6.7"
   # s.add_dependency "cap-recipes", "~> 0.3.36"
   # http://github.com/rubaidh/rubaidhstrano
   # https://github.com/relevance/cap_gun
@@ -32,5 +32,6 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "bundler"
   s.add_development_dependency "version"
+  s.add_development_dependency "rake"
 end
 
