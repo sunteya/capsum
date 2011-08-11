@@ -5,7 +5,7 @@ Capistrano::Configuration.instance(true).load do
   set :scm, "git"
   
   # use current branch
-  set(:branch) { `git describe --contains --all HEAD` }
+  set(:branch) { `git describe --contains --all HEAD`.chomp }
   
   set :scm_verbose, true
   
