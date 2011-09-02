@@ -1,5 +1,9 @@
 ## TODO:
  
+## v0.6.0:
+
+ - bundler only run on exist gemfile
+ - add rails cache clear recipe
 
 ## v0.5.0:
 
