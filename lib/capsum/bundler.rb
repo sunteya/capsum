@@ -1,19 +1,28 @@
 require File.expand_path("../../capsum.rb", __FILE__)
-require "bundler/deployment"
 
 Capistrano::Configuration.instance(true).load do
-  
-  set :bundle_flags, "--quiet #{fetch(:bundle_opts, '')}"
-  set :bundle_dir, ""
-  set(:current_release) { fetch(:release_path) }
-  
-  set(:bundle_cmd) do
-    gemfile = fetch(:bundle_gemfile, "Gemfile")
-    "test -f #{File.join(current_release, gemfile)} && bundle"
+
+  namespace :bundle do
+
+    desc <<-DESC
+      Install the current Bundler environment.
+      set :bundle_flags,    "--deployment --quiet"
+      set :bundle_without,  [:development, :test]
+    DESC
+    task :install, :except => { :no_release => true } do
+      bundle_flags = fetch(:bundle_flags, '')
+      bundle_without = fetch(:bundle_without, [:development, :test])
+      
+      args = []
+      args << bundle_flags.to_s
+      args << "--without #{bundle_without.join(" ")}" unless bundle_without.empty?
+      cmd = "bundle install #{args.join(' ')}"
+      
+      run "cd #{release_path}; if [ -f Gemfile ]; then #{cmd}; fi"
+    end
   end
 
-  Bundler::Deployment.define_task(self, :task, :except => { :no_release => true })
   after "deploy:symlink_shared", "bundle:install"
-  
+
 end
 
