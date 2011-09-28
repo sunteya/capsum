@@ -18,7 +18,7 @@ Capistrano::Configuration.instance(true).load do
       args << "--without #{bundle_without.join(" ")}" unless bundle_without.empty?
       cmd = "bundle install #{args.join(' ')}"
       
-      run "cd #{release_path}; if [ -f Gemfile ]; then #{cmd}; fi"
+      run "cd #{release_path}; [ -f Gemfile ] && #{cmd}"
     end
   end
 
