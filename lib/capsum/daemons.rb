@@ -34,7 +34,7 @@ Capistrano::Configuration.instance(true).load do
         identifier = "#{deploy_to}#daemons"
         schedule_file_path = "%{schedule_dir}/schedule.daemons.rb"
         
-        whenever_clear_command  = "type whenever > /dev/null 2>&1 && whenever --clear-crontab #{identifier} --load-file /dev/null"
+        whenever_clear_command  = "if [ type whenever > /dev/null 2>&1 ]; then whenever --clear-crontab #{identifier} --load-file /dev/null; fi"
         whenever_update_command = "whenever --update-crontab #{identifier} --load-file #{schedule_file_path}"
         
         command = "if [ -e #{schedule_file_path} ]; then #{whenever_update_command}; else #{whenever_clear_command}; fi"
