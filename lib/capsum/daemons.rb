@@ -100,8 +100,8 @@ EOF
         daemon = options.merge(source)
       else
         command = source.to_s
-        daemon[:start] = "RAILS_ENV=#{rails_env} #{command} start"
-        daemon[:stop] = "RAILS_ENV=#{rails_env} #{command} stop"
+        daemon[:start] = command.gsub("%{command}", "start")
+        daemon[:stop] = command.gsub("%{command}", "stop")
       end
       
       daemon[:name] = daemon[:start] if daemon[:name].nil?
