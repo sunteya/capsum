@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   
   
   # Dependency Gems
-  s.add_dependency "capistrano", "~> 2.8.0"
+  s.add_dependency "capistrano", "~> 2.9.0"
   s.add_dependency "capistrano_colors", "~> 0.5.4"
   s.add_dependency "capistrano-ext", "~> 1.2.1"
   s.add_dependency "capistrano-helpers", "~> 0.6.7"
