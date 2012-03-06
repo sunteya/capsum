@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "capsum"
 
 Gem::Specification.new do |s|
   s.name        = "capsum"
-  s.version     = Capsum::VERSION
+  s.version     = File.read(File.expand_path("../VERSION", __FILE__)).chomp
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Sunteya"]
   s.email       = ["Sunteya@gmail.com"]

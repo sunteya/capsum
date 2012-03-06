@@ -1,4 +1,3 @@
 require File.expand_path("../typical.rb", __FILE__)
 
-Capistrano::Configuration.instance(true).load do
-end
+abort "please use \"require 'capsum/typical'\" instance of \"require 'capsum/typical3'\""

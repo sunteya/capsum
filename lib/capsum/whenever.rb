@@ -26,5 +26,5 @@ Capistrano::Configuration.instance(true).load do
     end
   end
   
-  after "deploy:symlink", "whenever:update" 
+  after "deploy:finalize_update", "whenever:update"
 end
