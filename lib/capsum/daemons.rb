@@ -62,7 +62,7 @@ EOF
       end
     end
     
-    after "deploy:finalize_update", "daemons:update_cron" 
+    after "deploy:create_symlink", "daemons:update_cron" 
     after "deploy:rollback", "daemons:update_cron"
     
     after "deploy:start", "daemons:start" 
