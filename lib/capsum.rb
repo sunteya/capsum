@@ -24,7 +24,6 @@ Capistrano::Configuration.instance.load do
         do_delete &&= (options[:only] && options[:only] == callback.only)
       end
       
-      puts "delete task #{name}" if (do_delete)
       do_delete
     end
   end
