@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
   
   
   # Dependency Gems
-  s.add_dependency "capistrano", "~> 2.11.2"
+  s.add_dependency "capistrano", "~> 2.12.0"
   s.add_dependency "capistrano_colors", "~> 0.5.4"
-  s.add_dependency "capistrano-helpers", "~> 0.6.7"
+  s.add_dependency "capistrano-helpers", "~> 0.7.1"
   # s.add_dependency "cap-recipes", "~> 0.3.36"
   # http://github.com/rubaidh/rubaidhstrano
   # https://github.com/relevance/cap_gun
