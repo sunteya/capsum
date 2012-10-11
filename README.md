@@ -14,7 +14,8 @@
 	
 	set :application, "portal"
 	set :shared, %w{
-	  config/application.local.rb
+	  config/database.yml
+	  config/settings.local.rb
 	}
 
 
@@ -22,6 +23,7 @@
 
 	set :deploy_to, "/var/www/starcloud/apps/#{application}"
 	
+	set :rails_env, "production"
 	set :user, "www-data"
 	server "foo.bar.com", :app, :web, :db, :primary => true
 
