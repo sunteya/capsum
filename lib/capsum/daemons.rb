@@ -8,7 +8,7 @@ Capistrano::Configuration.instance(true).load do
       find_servers(:roles => :app).each do |server|
         matcher = server.options[:daemons]
         daemon_list.each do |daemon|
-          run "cd #{current_path}; #{daemon[:start]}", :hosts => server.host if match(matcher, daemon)
+          run "cd #{current_path}; #{daemon[:start]}", :pty => (daemon[:pty] || false), :hosts => server.host if match(matcher, daemon)
         end
       end
     end
