@@ -23,7 +23,6 @@
 
 	set :deploy_to, "/var/www/starcloud/apps/#{application}"
 	
-	set :rails_env, "production"
 	set :user, "www-data"
 	server "foo.bar.com", :app, :web, :db, :primary => true
 
