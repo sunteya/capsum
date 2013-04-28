@@ -13,9 +13,9 @@
 	require "capsum/typical"
 	
 	set :application, "portal"
-	set :shared, %w{
+	set :shared_children, shared_children + %w{
 	  config/database.yml
-	  config/settings.local.rb
+	  config/settings.local.yml
 	}
 
 
