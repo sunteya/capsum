@@ -4,7 +4,7 @@ module Capsum
   VERSION = open(File.expand_path("../../VERSION", __FILE__)).read.chomp
 end
 
-Capistrano::Configuration.instance.load do
+Capistrano::Configuration.instance(true).load do
   
   def self.unbefore(task_name, name)
     options = { :only => [ task_name ] }

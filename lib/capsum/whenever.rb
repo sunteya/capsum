@@ -13,7 +13,7 @@ Capistrano::Configuration.instance(true).load do
             variables = whenever_settings.map{ |key, value| "#{key}=#{value}" }.join("&")
           end
 
-          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{identifier} --set \"environment=#{rails_env}&%s\"; fi"
+          command = "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} #{whenever_bin} --update-crontab #{identifier} --set \"environment=#{rails_env}&%s\"; fi"
           run (command % variables), :hosts => server.host
         end
       end
@@ -22,7 +22,15 @@ Capistrano::Configuration.instance(true).load do
     desc 'Cleanup the crontab'
     task :cleanup, :roles => :app do
       identifier = fetch(:whenever_identifier, deploy_to)
-      run "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} whenever --update-crontab #{identifier} --load-file /dev/null; fi"
+      run "if [ -e #{current_path}/config/schedule.rb ]; then cd #{current_path}; RAILS_ENV=#{rails_env} #{whenever_bin} --update-crontab #{identifier} --load-file /dev/null; fi"
+    end
+
+    def whenever_bin
+      if fetch(:use_bundle, false)
+        "bundle exec whenever"
+      else
+        "whenever"
+      end
     end
   end
   
