@@ -1,4 +1,5 @@
 require File.expand_path("../../capsum.rb", __FILE__)
+require File.expand_path("../autostart.rb", __FILE__)
 
 Capistrano::Configuration.instance(true).load do
   
@@ -27,47 +28,18 @@ Capistrano::Configuration.instance(true).load do
       daemons.start
     end
     
-    desc "install daemons to cron"
-    task :update_cron, :roles => :app do
+    desc "setup daemons to autostart"
+    task :setup_autostart, :roles => :app do
+      autostart_server_commands = fetch(:autostart_server_commands)
+
       find_servers(:roles => :app).each do |server|
+        autostart_server_commands[server] ||= []
         
-        identifier = "#{deploy_to}#daemons"
-        schedule_file_path = "%{schedule_dir}/schedule.daemons.rb"
-        
-        whenever_clear_command  = "if [ type whenever > /dev/null 2>&1 ]; then whenever --clear-crontab #{identifier} --load-file /dev/null; fi"
-        whenever_update_command = "whenever --update-crontab #{identifier} --load-file #{schedule_file_path}"
-        
-        command = "if [ -e #{schedule_file_path} ]; then #{whenever_update_command}; else #{whenever_clear_command}; fi"
-        
-        # on_rollback do
-        #   schedule_dir = fetch(:previous_release) || release_path
-        #   run (command % { :schedule_dir => schedule_dir }), :hosts => server.host
-        # end
-        
-        matcher = server.options[:daemons]
-        daemon_commands = daemon_list.map do |daemon|
-          "cd #{current_path}; #{daemon[:start]}" if match(matcher, daemon)
-        end.compact
-        
-        if !daemon_commands.empty?
-          schedule_content=<<-EOF
-every(:reboot) do
-#{daemon_commands.map{ |cmd| "  command #{cmd.inspect}" }.join("\n")}
-end
-EOF
-          top.put schedule_content, (schedule_file_path % { :schedule_dir => release_path }), :hosts => server.host
+        daemon_list.each do |daemon|
+          autostart_server_commands[server] << "cd #{current_path}; #{daemon[:start]}" if match(matcher, daemon)
         end
-        
-        run (command % { :schedule_dir => release_path }), :hosts => server.host
       end
     end
-    
-    after "deploy:create_symlink", "daemons:update_cron" 
-    after "deploy:rollback", "daemons:update_cron"
-    
-    after "deploy:start", "daemons:start" 
-    after "deploy:stop", "daemons:stop" 
-    after "deploy:restart", "daemons:restart"
     
     def match(matcher, daemon)
       return matcher.call(daemon[:name]) if matcher.respond_to?(:call)
@@ -109,5 +81,10 @@ EOF
     end
   end
 
+  before "autostart:update_crontab", "daemons:setup_autostart" 
+
+  after "deploy:start", "daemons:start" 
+  after "deploy:stop", "daemons:stop" 
+  after "deploy:restart", "daemons:restart"
 end
 
