@@ -33,6 +33,7 @@ Capistrano::Configuration.instance(true).load do
       autostart_server_commands = fetch(:autostart_server_commands)
 
       find_servers(:roles => :app).each do |server|
+        matcher = server.options[:daemons]
         autostart_server_commands[server] ||= []
         
         daemon_list.each do |daemon|
