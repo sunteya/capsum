@@ -1,7 +1,7 @@
 # require File.expand_path("../../capsum.rb", __FILE__)
 # require File.expand_path("../setup.rb", __FILE__)
 require File.expand_path("../git.rb", __FILE__)
-# require File.expand_path("../shared.rb", __FILE__)
+require File.expand_path("../shared.rb", __FILE__)
 
 # Capistrano::Configuration.instance.load do
 # set :use_sudo, false
