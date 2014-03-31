@@ -13,6 +13,6 @@ namespace :load do
 
     set :repo_url, ENV['repo_url'] if ENV['repo_url']
 
-    # # TODO: set :scm_verbose, true
+    # TODO: set :scm_verbose, true
   end
 end

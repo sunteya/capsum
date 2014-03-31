@@ -6,10 +6,8 @@ require "capistrano/rsync"
 
 # Capistrano::Configuration.instance.load do
 # set :use_sudo, false
-
-  # default_environment["http_proxy"] = fetch("http_proxy") if exists?("http_proxy")
-  # default_environment["https_proxy"] = fetch("https_proxy") if exists?("https_proxy")
-  # after "deploy:update", "deploy:cleanup"
+# default_environment["http_proxy"] = fetch("http_proxy") if exists?("http_proxy")
+# default_environment["https_proxy"] = fetch("https_proxy") if exists?("https_proxy")
 # end
 #
 
@@ -19,8 +17,10 @@ namespace :load do
       raise "capsum don't compatible 'capistrano-rsync' gem, please remove capistrano-rsync depend. because it uses a modified version of capistrano-rsync script. "
     end
 
+    fetch(:linked_files) { set :linked_files, [] }
+    fetch(:linked_dirs) { set :linked_dirs, [] }
+
     set :scm, :rsync
     set :rsync_options, %w[--recursive --delete]
   end
 end
-
