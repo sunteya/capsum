@@ -1,3 +1,16 @@
+# NOTE: Please don't depend on tasks without a description (`desc`) as they
+# might change between minor or patch version releases. They make up the
+# private API and internals of Capistrano::Rsync. If you think something should
+# be public for extending and hooking, please let me know!
+
+rsync_cache = lambda do
+  cache = fetch(:rsync_cache)
+  cache = deploy_to + "/" + cache if cache && cache !~ /^\//
+  cache
+end
+
+# PATCH https://github.com/moll/capistrano-rsync/pull/13
+# Use cap3's load:defaults to set default vars so that they can be overridden.
 namespace :load do
   task :defaults do
     set :rsync_options, %w[--recursive --delete --delete-excluded  --exclude .git*]
@@ -13,11 +26,6 @@ namespace :load do
   end
 end
 
-rsync_cache = lambda do
-  cache = fetch(:rsync_cache)
-  cache = deploy_to + "/" + cache if cache && cache !~ /^\//
-  cache
-end
 
 Rake::Task["deploy:check"].enhance ["rsync:hook_scm"]
 Rake::Task["deploy:updating"].enhance ["rsync:hook_scm"]
@@ -57,17 +65,20 @@ namespace :rsync do
     clone = %W[git clone]
     clone << fetch(:repo_url, ".")
     clone << fetch(:rsync_stage)
-    Kernel.system *clone
+    run_locally { execute *clone }
   end
 
   desc "Stage the repository in a local directory."
   task :stage => %w[create_stage] do
     Dir.chdir fetch(:rsync_stage) do
       update = %W[git fetch --quiet --all --prune]
-      Kernel.system *update
+      run_locally { execute *update }
 
       checkout = %W[git reset --hard origin/#{fetch(:branch)}]
-      Kernel.system *checkout
+      run_locally { execute *checkout }
+
+      # PATCH https://github.com/moll/capistrano-rsync/pull/8
+      set :current_revision, "#{`git rev-parse --short HEAD`}".chomp
     end
   end
 
