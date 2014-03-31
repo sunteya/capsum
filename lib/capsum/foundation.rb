@@ -2,6 +2,7 @@
 # require File.expand_path("../setup.rb", __FILE__)
 require File.expand_path("../git.rb", __FILE__)
 require File.expand_path("../shared.rb", __FILE__)
+require "capistrano/rsync"
 
 # Capistrano::Configuration.instance.load do
 # set :use_sudo, false
@@ -12,8 +13,14 @@ require File.expand_path("../shared.rb", __FILE__)
 # end
 #
 
-if spec = Gem.loaded_specs["capistrano-rsync"]
-  raise "capsum don't compatible 'capistrano-rsync' gem, please remove capistrano-rsync depend. because it uses a modified version of capistrano-rsync script. "
+namespace :load do
+  task :defaults do
+    if spec = Gem.loaded_specs["capistrano-rsync"]
+      raise "capsum don't compatible 'capistrano-rsync' gem, please remove capistrano-rsync depend. because it uses a modified version of capistrano-rsync script. "
+    end
+
+    set :scm, :rsync
+    set :rsync_options, %w[--recursive --delete]
+  end
 end
-set :scm, :rsync
-set :rsync_options, %w[--recursive --delete]
+

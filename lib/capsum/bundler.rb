@@ -1,9 +1,7 @@
-require File.expand_path("../../capsum.rb", __FILE__)
-require "bundler/capistrano"
+require "capistrano/bundler"
 
-Capistrano::Configuration.instance(true).load do
-  set :bundle_dir, nil
-  set :bundle_flags, "--quiet"
-
-  set :use_bundle, true
+namespace :load do
+  task :defaults do
+    set :bundle_flags, '--quiet'
+  end
 end

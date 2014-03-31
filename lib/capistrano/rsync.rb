@@ -1,21 +1,16 @@
-fetch :rsync_options do
-  set :rsync_options, %w[--recursive --delete --delete-excluded  --exclude .git*]
-end
+namespace :load do
+  task :defaults do
+    set :rsync_options, %w[--recursive --delete --delete-excluded  --exclude .git*]
+    set :rsync_copy, "rsync --archive --acls --xattrs"
 
-fetch :rsync_copy do
-  set :rsync_copy, "rsync --archive --acls --xattrs"
-end
+    # Stage is used on your local machine for rsyncing from.
+    set :rsync_stage, "tmp/deploy"
 
-# Stage is used on your local machine for rsyncing from.
-fetch :rsync_stage do
-  set :rsync_stage, "tmp/deploy"
-end
-
-# Cache is used on the server to copy files to from to the release
-# directory. Saves you rsyncing your whole app folder each time. If you nil
-# rsync_cache, Capistrano::Rsync will sync straight to the release path.
-fetch :rsync_cache do
-  set :rsync_cache, "shared/deploy"
+    # Cache is used on the server to copy files to from to the release
+    # directory. Saves you rsyncing your whole app folder each time. If you nil
+    # rsync_cache, Capistrano::Rsync will sync straight to the release path.
+    set :rsync_cache, "shared/deploy"
+  end
 end
 
 rsync_cache = lambda do
@@ -89,3 +84,4 @@ namespace :rsync do
   # Plus was part of the public API in Capistrano::Rsync <= v0.2.1.
   task :create_release => %w[release]
 end
+
