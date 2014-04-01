@@ -1,17 +1,29 @@
 require File.expand_path("../../capsum.rb", __FILE__)
-require "capistrano/ext/multistage"
-require File.expand_path("../setup.rb", __FILE__)
 require File.expand_path("../git.rb", __FILE__)
 require File.expand_path("../shared.rb", __FILE__)
+require "capistrano/rsync"
 
-Capistrano::Configuration.instance(true).load do
-  set :use_sudo, false
+namespace :load do
+  task :defaults do
+    if spec = Gem.loaded_specs["capistrano-rsync"]
+      raise "capsum don't compatible 'capistrano-rsync' gem, please remove capistrano-rsync depend. because it uses a modified version of capistrano-rsync script. "
+    end
 
-  set :deploy_via, :copy
-  set :copy_strategy, :export
-  set :copy_compression, :bz2
-  
-  default_environment["http_proxy"] = fetch("http_proxy") if exists?("http_proxy")
-  default_environment["https_proxy"] = fetch("https_proxy") if exists?("https_proxy")
-  after "deploy:update", "deploy:cleanup"
+    fetch(:linked_files) { set :linked_files, [] }
+    fetch(:linked_dirs) { set :linked_dirs, [] }
+
+    set :scm, :rsync
+    set :rsync_options, %w[--recursive --delete]
+
+    default_env[:http_proxy] = ENV["http_proxy"] if ENV["http_proxy"]
+    default_env[:https_proxy] = ENV["https_proxy"] if ENV["https_proxy"]
+  end
+end
+
+module Capistrano
+  module DSL
+    def default_env
+      fetch(:default_env)
+    end
+  end
 end

@@ -17,7 +17,10 @@ Gem::Specification.new do |s|
   s.license       = 'MIT'
   
   # Dependency Gems
-  s.add_dependency "capistrano", "~> 2.15.3"
+  s.add_dependency "capistrano", "~> 3.1"
+  # s.add_dependency "capistrano-rsync", "~> 1.0.2" # broken, wait update
+  s.add_dependency "capistrano-rails", "~> 1.1.1"
+
   # s.add_dependency "capistrano-helpers", "~> 0.7.1"
   # s.add_dependency "cap-recipes", "~> 0.3.36"
   # https://github.com/rubaidh/rubaidhstrano

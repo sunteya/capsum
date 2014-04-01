@@ -1,9 +1,19 @@
-require File.expand_path("../../capsum.rb", __FILE__)
-require "bundler/capistrano"
+require "capistrano/bundler"
 
-Capistrano::Configuration.instance(true).load do
-  set :bundle_dir, nil
-  set :bundle_flags, "--quiet"
+namespace :load do
+  task :defaults do
+    set :bundle_flags, '--quiet'
+    set :bundle_env_variables, {}
 
-  set :use_bundle, true
+    bundle_env_variables[:http_proxy] = ENV["bundle_http_proxy"] if ENV["bundle_http_proxy"]
+    bundle_env_variables[:https_proxy] = ENV["bundle_https_proxy"] if ENV["bundle_https_proxy"]
+  end
+end
+
+module Capistrano
+  module DSL
+    def bundle_env_variables
+      fetch(:bundle_env_variables)
+    end
+  end
 end

@@ -1,12 +1,24 @@
 ## TODO:
- 
-## v0.6.0:
 
- - bundler only run on exist gemfile
- - add rails cache clear recipe
+## v1.0:
+- upgrade capistrano to v3, v2 is not compatible
 
-## v0.5.0:
+## v0.9:
+- use the official whenever recipe
+- add sidekiq recipe support autostart
 
- - add git recipe, support use current project's branch
- - change typical recipe, now set :deploy_via, :copy
- 
+## v0.8:
+- auto detect git setting by project git config
+- always invoke deploy:cleanup after deploy:update
+- support http_proxy variables
+
+## v0.7:
+- add daemons recipe
+
+## v0.6:
+- bundler only run on exist gemfile
+- add rails cache clear recipe
+
+## v0.5:
+- add git recipe, support use current project's branch
+- change typical recipe, now set :deploy_via, :copy
