@@ -4,13 +4,6 @@ require File.expand_path("../git.rb", __FILE__)
 require File.expand_path("../shared.rb", __FILE__)
 require "capistrano/rsync"
 
-# Capistrano::Configuration.instance.load do
-# set :use_sudo, false
-# default_environment["http_proxy"] = fetch("http_proxy") if exists?("http_proxy")
-# default_environment["https_proxy"] = fetch("https_proxy") if exists?("https_proxy")
-# end
-#
-
 namespace :load do
   task :defaults do
     if spec = Gem.loaded_specs["capistrano-rsync"]
@@ -22,5 +15,16 @@ namespace :load do
 
     set :scm, :rsync
     set :rsync_options, %w[--recursive --delete]
+
+    default_env[:http_proxy] = ENV["http_proxy"] if ENV["http_proxy"]
+    default_env[:https_proxy] = ENV["https_proxy"] if ENV["https_proxy"]
+  end
+end
+
+module Capistrano
+  module DSL
+    def default_env
+      fetch(:default_env)
+    end
   end
 end
