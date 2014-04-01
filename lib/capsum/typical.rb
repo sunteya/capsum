@@ -11,5 +11,10 @@ require File.expand_path("../whenever.rb", __FILE__)
 namespace :load do
   task :defaults do
     set :rails_env, "production"
+
+    fetch(:linked_dirs).concat %w[
+      log
+      tmp/pids
+    ]
   end
 end
