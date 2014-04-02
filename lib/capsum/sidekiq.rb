@@ -7,7 +7,7 @@ namespace :sidekiq do
     scripts = []
     sidekiq_role = fetch(:sidekiq_role)
     on (roles sidekiq_role || []).first do |host|
-      return if host.nil?
+      break if host.nil?
       for_each_process do |pid_file, idx|
         start_scripts = SimpleScriptRecord.new do
           start_sidekiq(pid_file)
