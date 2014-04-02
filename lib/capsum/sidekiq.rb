@@ -1,23 +1,86 @@
 require File.expand_path("../../capsum.rb", __FILE__)
-require File.expand_path("../autostart.rb", __FILE__)
-require 'sidekiq/capistrano'
+require File.expand_path("../daemons.rb", __FILE__)
+require 'capistrano/sidekiq'
 
-
-Capistrano::Configuration.instance(true).load do
-  namespace :sidekiq do
-
-    desc "setup sidekiq daemon to autostart"
-    task :setup_autostart do
-      autostart_server_commands = fetch(:autostart_server_commands)
-      rails_env = fetch(:rails_env, "production")
-      find_servers(roles: fetch(:sidekiq_role)).each do |server|
-        autostart_server_commands[server] ||= []
-        for_each_process do |pid_file, idx|
-          autostart_server_commands[server] << "cd #{current_path} ; nohup #{fetch(:sidekiq_cmd)} -e #{rails_env} -C #{current_path}/config/sidekiq.yml -i #{idx} -P #{pid_file} >> #{current_path}/log/sidekiq.log 2>&1 &"
+namespace :sidekiq do
+  task :update_daemon_list do
+    scripts = []
+    sidekiq_role = fetch(:sidekiq_role)
+    on (roles sidekiq_role || []).first do |host|
+      return if host.nil?
+      for_each_process do |pid_file, idx|
+        start_scripts = SimpleScriptRecord.new do
+          start_sidekiq(pid_file)
         end
+
+        stop_scripts = SimpleScriptRecord.new do
+          stop_sidekiq(pid_file)
+        end
+
+        scripts << {
+          start: start_scripts.to_bash,
+          stop: stop_scripts.to_bash,
+          pid_file: pid_file
+        }
       end
     end
+
+    scripts.each do |script|
+      script[:role] = sidekiq_role
+      script[:name] = File.basename(script[:pid_file], ".pid") if script[:pid_file]
+    end
+
+    fetch(:daemon_list).concat scripts
   end
 
-  before "autostart:update_crontab", "sidekiq:setup_autostart" 
+  after 'daemons:prepare', :update_daemon_list
+end
+
+namespace :load do
+  task :defaults do
+    set :sidekiq_options, "--config config/sidekiq.yml"
+    set :sidekiq_role, [ :db, filter: :sidekiq ]
+  end
+end
+
+class SimpleScriptRecord < SSHKit::Backend::Printer
+  attr_accessor :result
+
+  def initialize(&block)
+    @result = []
+    @block = block
+    self.run
+  end
+
+  def within(directory, &block)
+    (@pwd ||= []).push directory.to_s
+    yield
+  ensure
+    @pwd.pop
+  end
+
+  def to_bash
+    result.map do |args|
+      cmd = []
+      options = args.extract_options!
+      cmd << "cd #{options[:in]} && " if options[:in]
+      cmd << args.join(" ")
+
+      cmd.join
+    end.join("\n")
+  end
+
+  def execute(*args)
+    options = args.extract_options!
+    options.merge!(in: @pwd.nil? ? nil : File.join(@pwd), env: @env, host: @host, user: @user, group: @group)
+    @result << [ *args, options ]
+  end
+
+  def test(*args)
+    raise SSHKit::Backend::MethodUnavailableError
+  end
+
+  def command(*args)
+    raise SSHKit::Backend::MethodUnavailableError
+  end
 end
