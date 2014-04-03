@@ -1,6 +1,12 @@
 require File.expand_path("../../capsum.rb", __FILE__)
 require File.expand_path("../daemons.rb", __FILE__)
-require 'capistrano/sidekiq'
+
+begin
+  require 'capistrano/sidekiq'
+rescue LoadError
+  puts 'ERROR: If you want to use the "capsum/sidekiq". you must to add [ gem "capistrano-sidekiq", require: false ] to your Gemfile.'
+  exit 1
+end
 
 namespace :sidekiq do
   task :update_daemon_list do
