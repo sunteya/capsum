@@ -1,3 +1,5 @@
+require "capsum"
+
 namespace :capsum do
   task :symlink_shared_deprecated do
     if fetch(:shared)

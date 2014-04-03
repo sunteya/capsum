@@ -1,8 +1,8 @@
-require File.expand_path("../../capsum.rb", __FILE__)
+require "capsum"
 
 begin
   require "whenever/capistrano"
-rescue LoadError => e
+rescue LoadError
   # skip
 end
 

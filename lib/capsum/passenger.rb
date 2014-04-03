@@ -1,4 +1,4 @@
-require File.expand_path("../../capsum.rb", __FILE__)
+require "capsum"
 
 namespace :deploy do
   desc 'Restart passenger'

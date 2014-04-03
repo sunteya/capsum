@@ -1,5 +1,5 @@
-require File.expand_path("../../capsum.rb", __FILE__)
-require File.expand_path("../daemons.rb", __FILE__)
+require "capsum"
+require "capsum/daemons"
 
 begin
   require 'capistrano/sidekiq'

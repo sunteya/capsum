@@ -1,4 +1,4 @@
-require File.expand_path("../../capsum.rb", __FILE__)
+require "capsum"
 # require File.expand_path("../autostart.rb", __FILE__)
 
 namespace :load do
@@ -7,7 +7,6 @@ namespace :load do
     set :daemon_list, []
   end
 end
-
 
 namespace :daemons do
   task :prepare do
