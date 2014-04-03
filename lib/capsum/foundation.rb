@@ -1,6 +1,7 @@
 require File.expand_path("../../capsum.rb", __FILE__)
 require File.expand_path("../git.rb", __FILE__)
 require File.expand_path("../shared.rb", __FILE__)
+require "capistrano/console"
 require "capistrano/rsync"
 
 namespace :load do
