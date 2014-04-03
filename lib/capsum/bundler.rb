@@ -1,3 +1,4 @@
+require "capsum"
 require "capistrano/bundler"
 
 namespace :load do

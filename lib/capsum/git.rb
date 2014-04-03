@@ -1,11 +1,11 @@
-# require File.expand_path("../../capsum.rb", __FILE__)
+require "capsum"
 
 namespace :load do
   task :defaults do
     # use current branch
     set :branch, -> { `git describe --contains --all HEAD | tr -d '\n'` }
 
-    # use current remote
+    # use current remote repo url
     set :repo_url, -> {
       remote = `git config --get branch.#{fetch(:branch)}.remote | tr -d '\n'`
       `git config --get remote.#{remote}.url | tr -d '\n'`
