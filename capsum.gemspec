@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-# require 'capsum/version'
+require 'capsum/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "capsum"
-  spec.version       = File.read(File.expand_path("../VERSION", __FILE__)).chomp
   spec.version       = Capsum::VERSION
   spec.authors       = ["sunteya"]
   spec.email         = ["sunteya@gmail.com"]
@@ -34,6 +33,5 @@ Gem::Specification.new do |spec|
   # https://github.com/bokmann/dunce-cap
   
   spec.add_development_dependency "rake"
-  spec.add_development_dependency "bundler"
-  spec.add_development_dependency "version"
+  spec.add_development_dependency "bundler", ">= 1.6.1"
 end
