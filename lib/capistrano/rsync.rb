@@ -60,11 +60,26 @@ namespace :rsync do
   end
 
   task :create_stage do
-    next if File.directory?(fetch(:rsync_stage))
+    repo_url = fetch(:repo_url, ".")
+    deploy_cache_dir = fetch(:rsync_stage)
+    if File.directory?(deploy_cache_dir)
+      repo_url_changed = false
+      Dir.chdir deploy_cache_dir do
+        absolute_repo_url = File.absolute_path(repo_url)
+        absolute_cache_repo_url = File.absolute_path(`git config --get remote.origin.url`.chomp)
+        repo_url_changed = (absolute_repo_url != absolute_cache_repo_url)
+      end
+
+      if repo_url_changed
+        run_locally { execute :rm, "-rf", deploy_cache_dir }
+      else
+        next
+      end
+    end
 
     clone = %W[git clone]
-    clone << fetch(:repo_url, ".")
-    clone << fetch(:rsync_stage)
+    clone << repo_url
+    clone << deploy_cache_dir
     run_locally { execute *clone }
   end
 
