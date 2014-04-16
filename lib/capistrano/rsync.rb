@@ -83,6 +83,12 @@ namespace :rsync do
     run_locally { execute *clone }
   end
 
+  task :set_current_revision do
+    Dir.chdir fetch(:rsync_stage) do
+      set :current_revision, "#{`git rev-parse --short HEAD`}".chomp
+    end
+  end
+
   desc "Stage the repository in a local directory."
   task :stage => %w[create_stage] do
     Dir.chdir fetch(:rsync_stage) do
@@ -91,9 +97,6 @@ namespace :rsync do
 
       checkout = %W[git reset --hard origin/#{fetch(:branch)}]
       run_locally { execute *checkout }
-
-      # PATCH https://github.com/moll/capistrano-rsync/pull/8
-      set :current_revision, "#{`git rev-parse --short HEAD`}".chomp
     end
   end
 

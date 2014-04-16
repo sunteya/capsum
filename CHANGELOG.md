@@ -1,7 +1,7 @@
 ## TODO:
 
 ## v1.0:
-- upgrade capistrano to v3, v2 is not compatible
+- upgrade capistrano to v3.2, v2 is not compatible
 
 ## v0.9:
 - use the official whenever recipe
