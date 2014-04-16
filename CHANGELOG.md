@@ -3,6 +3,7 @@
 ## v1.0:
 - upgrade capistrano to v3.2, v2 is not compatible
 - monkey patch for sshkit to support non-ascii in command
+- upgrade capistrano-sidekiq to 0.2.5
 
 ## v0.9:
 - use the official whenever recipe

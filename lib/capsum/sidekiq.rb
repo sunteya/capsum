@@ -3,6 +3,10 @@ require "capsum/daemons"
 
 begin
   require 'capistrano/sidekiq'
+  unless Gem::Requirement.new(Capsum::CAPISTRANO_SIDEKIQ_REQUIREMENT) =~ Gem.loaded_specs["capistrano-sidekiq"].version
+    puts "ERROR: Could not find gem 'capistrano-sidekiq (#{Capsum::CAPISTRANO_SIDEKIQ_REQUIREMENT}) ruby' in the gems available on this machine."
+    exit 1
+  end
 rescue LoadError
   puts 'ERROR: If you want to use the "capsum/sidekiq". you must to add [ gem "capistrano-sidekiq", require: false ] to your Gemfile.'
   exit 1
