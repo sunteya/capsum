@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Dependency Gems
-  spec.add_dependency "capistrano", "~> 3.2.0"
+  spec.add_dependency "capistrano", "~> 3.2.1"
   # spec.add_dependency "capistrano-rsync", "~> 1.0.2" # broken, wait update
   spec.add_dependency "capistrano-rails", "~> 1.1.1"
   spec.add_development_dependency "capistrano-sidekiq", Capsum::CAPISTRANO_SIDEKIQ_REQUIREMENT # optional
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   # https://github.com/railsmachine/capistrano-cowboy
   # https://github.com/fnichol/capstrap
   # https://github.com/bokmann/dunce-cap
-  
+
   spec.add_development_dependency "rake"
   spec.add_development_dependency "bundler", ">= 1.6.1"
 end
