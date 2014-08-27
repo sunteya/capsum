@@ -14,6 +14,7 @@ namespace :load do
     fetch(:linked_dirs).concat %w[
       log
       tmp/pids
+      tmp/cache
     ]
   end
 end
