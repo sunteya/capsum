@@ -16,8 +16,7 @@ namespace :load do
     set :scm, :rsync
     set :rsync_options, %w[--archive --delete]
 
-    default_env[:http_proxy] = ENV["http_proxy"] if ENV["http_proxy"]
-    default_env[:https_proxy] = ENV["https_proxy"] if ENV["https_proxy"]
+    default_env[:https_proxy] = default_env[:http_proxy] = ENV["proxy"] if ENV["proxy"]
   end
 end
 
