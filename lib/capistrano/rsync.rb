@@ -37,6 +37,11 @@ task :rsync => %w[rsync:stage] do
 
     rsync = %w[rsync]
     rsync.concat fetch(:rsync_options)
+
+    if (port = role.port)
+      rsync += [ "-e", "ssh -p #{port}" ]
+    end
+
     rsync << fetch(:rsync_stage) + "/"
     rsync << "#{user}#{role.hostname}:#{rsync_cache.call || release_path}"
 
@@ -47,11 +52,11 @@ end
 namespace :rsync do
   task :hook_scm do
     Rake::Task.define_task("#{scm}:check") do
-      invoke "rsync:check" 
+      invoke "rsync:check"
     end
 
     Rake::Task.define_task("#{scm}:create_release") do
-      invoke "rsync:release" 
+      invoke "rsync:release"
     end
   end
 
