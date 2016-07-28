@@ -14,7 +14,6 @@ namespace :load do
     fetch(:linked_dirs) { set :linked_dirs, [] }
 
     set :scm, :rsync
-    set :rsync_options, %w[--archive --delete]
 
     default_env[:https_proxy] = default_env[:http_proxy] = ENV["proxy"] if ENV["proxy"]
   end
