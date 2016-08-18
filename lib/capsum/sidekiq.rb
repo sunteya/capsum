@@ -42,9 +42,9 @@ namespace :sidekiq do
 
     fetch(:daemon_list).concat scripts
   end
-
-  after 'daemons:prepare', :update_daemon_list
 end
+
+after 'daemons:prepare', "sidekiq:update_daemon_list"
 
 namespace :load do
   task :defaults do

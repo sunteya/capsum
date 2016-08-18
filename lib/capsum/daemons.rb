@@ -57,6 +57,7 @@ namespace :daemons do
     str.gsub(/^[ \t]{#{indent}}/, '')
   end
 end
+
 after 'deploy:updated', 'daemons:upload_daemons'
 
 
