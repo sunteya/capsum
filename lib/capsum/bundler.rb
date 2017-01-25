@@ -6,6 +6,11 @@ namespace :load do
     set :bundle_flags, '--quiet'
     set :bundle_env_variables, {}
 
+    if (proxy = ENV["bundle_proxy"])
+      bundle_env_variables[:http_proxy] = proxy
+      bundle_env_variables[:http_proxy] = proxy
+    end
+
     bundle_env_variables[:http_proxy] = ENV["bundle_http_proxy"] if ENV["bundle_http_proxy"]
     bundle_env_variables[:https_proxy] = ENV["bundle_https_proxy"] if ENV["bundle_https_proxy"]
   end
