@@ -1,4 +1,4 @@
-set_if_empty :rsync_options, %w(--recursive --delete --delete-excluded  --exclude .git*)
+set_if_empty :rsync_options, %w(--links --recursive --delete --delete-excluded  --exclude .git*)
 set_if_empty :rsync_copy, "rsync --archive --acls --xattrs"
 
 # Stage is used on your local machine for rsyncing from.
