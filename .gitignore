@@ -1,3 +1,4 @@
-pkg/*.gem
-Gemfile.lock
-tags
+/pkg/*.gem
+/Gemfile.lock
+/tags
+/.bundle/config
