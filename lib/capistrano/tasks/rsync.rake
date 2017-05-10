@@ -85,7 +85,9 @@ namespace :rsync do
     # Skip copying if we've already synced straight to the release directory.
     next if !fetch(:rsync_cache)
 
-    copy = %(#{fetch(:rsync_copy)} "#{rsync_cache.call}/" "#{release_path}/")
+
+    folder = fetch(:rsync_folder, "/")
+    copy = %(#{fetch(:rsync_copy)} "#{rsync_cache.call}#{folder}" "#{release_path}/")
     on roles(:all) do
       execute copy
     end
