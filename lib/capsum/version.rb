@@ -1,4 +1,4 @@
 module Capsum
-  VERSION = "1.0.8"
+  VERSION = "1.1.0"
   CAPISTRANO_SIDEKIQ_REQUIREMENT = "~> 0.10.0"
 end
