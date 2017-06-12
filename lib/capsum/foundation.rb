@@ -3,6 +3,7 @@ require "capsum/git"
 require "capsum/shared"
 require "capistrano/console"
 require "capistrano/rsync"
+require File.expand_path("../remote_env.rb", __FILE__)
 
 namespace :load do
   task :defaults do
@@ -15,7 +16,7 @@ namespace :load do
 
     set :scm, :rsync
 
-    default_env[:https_proxy] = default_env[:http_proxy] = ENV["proxy"] if ENV["proxy"]
+    remote_env[:https_proxy] = remote_env[:http_proxy] = ENV["proxy"] if ENV["proxy"]
   end
 end
 
