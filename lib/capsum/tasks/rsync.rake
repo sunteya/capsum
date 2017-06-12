@@ -1,11 +1,4 @@
-set_if_empty :rsync_options, %w(--links --recursive --delete --delete-excluded  --exclude .git*)
-set_if_empty :rsync_copy, "rsync --archive --acls --xattrs"
-
-# Stage is used on your local machine for rsyncing from.
-set_if_empty :rsync_stage, "tmp/deploy"
-
-# Cache is used on the server to copy files to from to the release directory.
-set_if_empty :rsync_cache, "shared/deploy"
+rsync_plugin = self
 
 rsync_cache = lambda do
   cache = fetch(:rsync_cache)
@@ -60,8 +53,7 @@ namespace :rsync do
   end
 
   desc "Stage and rsync to the server (or its cache)."
-  task :sync => %w(stage) do
-
+  task sync: %w(stage) do
     roles(:all).each do |role|
       user = role.user + "@" if role.user
 
@@ -75,16 +67,14 @@ namespace :rsync do
       rsync << fetch(:rsync_stage) + "/"
       rsync << "#{user}#{role.hostname}:#{rsync_cache.call || release_path}"
 
-      # Kernel.system *rsync
       run_locally { execute *rsync }
     end
   end
 
   desc "Copy the code to the releases directory."
-  task :create_release => %w(sync) do
+  task create_release: %w(sync) do
     # Skip copying if we've already synced straight to the release directory.
     next if !fetch(:rsync_cache)
-
 
     folder = fetch(:rsync_folder, "/")
     copy = %(#{fetch(:rsync_copy)} "#{rsync_cache.call}#{folder}" "#{release_path}/")

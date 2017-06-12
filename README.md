@@ -20,6 +20,9 @@ require 'capistrano/deploy'
 
 require "capsum/typical" # for rails project
 # require "capsum/sidekiq"
+
+require "capsum/rsync"
+install_plugin Capsum::Rsync
 ~~~~
 
 ### ./config/deploy.rb
