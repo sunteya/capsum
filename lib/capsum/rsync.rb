@@ -6,7 +6,7 @@ class Capsum::Rsync < Capistrano::SCM::Plugin
     set_if_empty :rsync_copy, "rsync --archive --acls --xattrs"
 
     # Stage is used on your local machine for rsyncing from.
-    set_if_empty :rsync_stage, "tmp/deploy"
+    set_if_empty :rsync_stage, File.join(Dir.tmpdir, "capsum", Dir.pwd)
 
     # Cache is used on the server to copy files to from to the release directory.
     set_if_empty :rsync_cache, "shared/deploy"
