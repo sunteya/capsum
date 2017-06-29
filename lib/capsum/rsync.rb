@@ -1,4 +1,5 @@
 require "capistrano/scm/plugin"
+require "tempfile"
 
 class Capsum::Rsync < Capistrano::SCM::Plugin
   def set_defaults
