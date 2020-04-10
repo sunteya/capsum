@@ -3,7 +3,7 @@ require "capsum"
 namespace :load do
   task :defaults do
     # use current branch
-    set :branch, -> { `git describe --contains --all HEAD | tr -d '\n'` }
+    set :branch, -> { `git rev-parse --abbrev-ref HEAD`.chomp }
 
     # use current remote repo url
     set :repo_url, -> {
