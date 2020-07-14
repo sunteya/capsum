@@ -49,6 +49,9 @@ namespace :rsync do
 
       checkout = %W(git reset --hard origin/#{fetch(:branch)})
       run_locally { execute *checkout }
+
+      submodule = %w(git submodule update --init --force)
+      run_locally { execute *submodule }
     end
   end
 
