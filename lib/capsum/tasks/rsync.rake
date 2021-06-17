@@ -61,11 +61,12 @@ namespace :rsync do
       user = role.user + "@" if role.user
 
       rsync = %w(rsync)
-      rsync.concat fetch(:rsync_options)
 
       if (port = role.port)
         rsync += [ "-e", %("ssh -p #{port}") ]
       end
+
+      rsync.concat fetch(:rsync_options)
 
       rsync << fetch(:rsync_stage) + "/"
       rsync << "#{user}#{role.hostname}:#{rsync_cache.call || release_path}"
