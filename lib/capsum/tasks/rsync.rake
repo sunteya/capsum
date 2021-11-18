@@ -63,7 +63,9 @@ namespace :rsync do
       rsync = %w(rsync)
 
       if (port = role.port)
-        rsync += [ "-e", %("ssh -p #{port}") ]
+        rsync += [ "-e", %("ssh -p #{port} #{fetch(:rsync_ssh_options)}") ]
+      elsif (rsync_ssh_options = fetch(:rsync_ssh_options))
+        rsync += [ "-e", %("ssh #{rsync_ssh_options}") ]
       end
 
       rsync.concat fetch(:rsync_options)
