@@ -10,6 +10,7 @@ require "capsum/daemons.rb"
 namespace :load do
   task :defaults do
     set :rails_env, "production"
+    fetch(:bundle_config, {})[:deployment] = false
 
     fetch(:linked_dirs).concat %w[
       log
